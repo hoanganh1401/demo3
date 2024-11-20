@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Manager</title>
+</head>
+<body>
+    <div align="center">
+        <div sec:authorize="isAuthenticated()">
+            <span sec:authentication="name">Username</span>
+            <span sec:authentication="principal.authorities">Roles</span>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Logout" />
+        </form>
+    </div>
+    <h1>Product Manager</h1>
+    <div sec:authorize="hasAnyAuthority('CREATOR', 'ADMIN')">
+        <a th:href="@{/new}">Create New Product</a>
+    </div>
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Name</th>
+                <th>Brand</th>
+                <th>Made In</th>
+                <th>Price</th>
+                <th sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Product list -->
+        </tbody>
+    </table>
+</body>
+</html>
